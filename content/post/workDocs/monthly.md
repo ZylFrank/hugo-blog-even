@@ -46,7 +46,56 @@ sequenceDiagrams:
 
 <!--more-->
 
-## 20207月6日
+## 2020年7月6日
+
+### 近期工作情况
+
+**TSTP系统新功能开发**
+
+- 系统中加入Muscle对齐功能
+
+使用Muscle工具可以根据参考序列信息找出目标序列中的插入和缺失情况，先将Muscle对齐功能集成到TSTP系统中，根据Muscle得出的分析结果，再将序列的重复区对齐并统一着色。
+
+- 创建不需要在线执行分析脚本的任务
+
+当服务器分析完测序数据后，需根据分析结果目录创建任务，通过对分析结果目录的遍历查找，实现在线展示Reads分析结果的功能，并通过设置Reads_num参数过滤Reads信息；并实现序列文件的线上对齐功能。主要功能点有：
+
+   1. 通过执行分析结果目录创建任务，自动查询该目录下的样品
+   2. 读取样品的Reads分析结果，并通过定义Reads_num过滤分析结果文件
+   3. 根据每个样品分型的参考序列对齐Reads序列文件
+
+- 准备著作权相关资料
+
+**种子库管理系统**
+
+- 部署可使用域名访问的对外测试系统
+
+将种子库管理系统的测试版本部署在229服务器，通过配置服务器域名，实现外网域名访问 [SWMS](https://seeds.plantdna.cn:8445)
+
+`在此过程中遇到的问题:`在配置服务器域名时，遇到了ParseServer的一个Bug，导致系统访问后端接口时出现跨域问题，通过查找相关文档给ParseServer配置publicServerURL为域名。重现发布系统后解决。
+
+```javascript
+const api = new ParseServer({
+  databaseURI: databaseUri || 'mongodb://localhost:27017/swms',
+  cloud: path.join(__dirname, '/cloud/main.js'),
+  appId: process.env.APP_ID,
+  masterKey: process.env.MASTER_KEY,
+  serverURL: serverUri || 'http://localhost:1337/api',
+  publicServerURL: publicUri, // https
+  maxUploadSize: `${process.env.MAX_UPLOAD_SIZE}mb` || '20mb',
+});
+```
+
+- 录入1号库于2号库样品信息
+
+将李松提供的入库信息表导入系统，因为提供的入库信息表中样品信息大多数都缺失了样品名称和样品来源信息，在录入系统之前需要将信息补全。目前系统中已录入1号库，2号库，4号库，三个库存信息，总共管理样品58586份样品。
+
+- 准备系统汇报演示，制作汇报PPT
+
+### 思考总结
+
+- 针对种子库管理系统样品入库时的信息缺失问题，需提供更加方便的解决方案。
+- 大批量样品入库时，可显示入库进度条，便于掌握入库进度。经测试当录入2多万条样品时的耗时在半个小时左右。
 
 ---
 
