@@ -119,6 +119,12 @@ $ mkdir theme && cd theme
 $ git clone git theme
 ```
 
+### 创建文章
+
+```
+$ hugo new post/first.md
+```
+
 ## 启动Hugo服务
 
 ```bash
